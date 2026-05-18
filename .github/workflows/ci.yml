@@ -41,4 +41,8 @@ jobs:
       service: ${{ vars.BACKEND_SERVICE_NAME }}
       tag: ${{ github.sha }}
       port: ${{ vars.BACKEND_PORT }}
-
+      vps-host: ${{ vars.VPS_HOST }}
+      vps-username: ${{ vars.VPS_USERNAME }}
+      vps-ssh-key: ${{ secrets.VPS_SSH_KEY }}
+      gh-pat: ${{ secrets.GH_PAT }}
+      frontend-service-name: ${{ vars.FRONTEND_SERVICE_NAME }}
