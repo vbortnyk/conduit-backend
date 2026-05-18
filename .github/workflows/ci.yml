@@ -1,10 +1,11 @@
-name: Build and push Conduit backend
+name: Build and push Conduit backednd
 
-on:
+on: 
   push:
     branches:
       - main
-
+      - configure-ci/cd
+      
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -22,20 +23,22 @@ jobs:
         with: 
           registry: ghcr.io
           username: ${{ github.repository_owner }}
-          password: ${{ secrets.GH_PAT }}
-
+          password: ${{ secrets.GH_PAT }}   
+      
       - name: Build and push to GHCR
         id: build
         uses: docker/build-push-action@v7
         with:
           context: .
           push: true
-          tags: ghcr.io/${{  github.repository_owner }}/${{ vars.BACKEND_SERVICE_NAME  }}:${{ github.sha }}
-
+          tags: ghcr.io/${{ github.repository_owner }}/${{ vars.BACKEND_SERVICE_NAME }}:${{ github.sha }}
+        
   call-deploy-workflow:
     needs: build
-    uses: vbortnyk/conduit-practice/.github/workflows/deployment-submodules.yml@main
+    uses: vbortnyk/conduit-deployment/.github/workflows/single-service-deployment.yml@ci/setup
     secrets: inherit
     with:
       service: ${{ vars.BACKEND_SERVICE_NAME }}
       tag: ${{ github.sha }}
+      port: ${{ vars.BACKEND_PORT }}
+
