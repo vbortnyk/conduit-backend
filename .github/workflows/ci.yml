@@ -1,4 +1,4 @@
-name: Build and push Conduit backednd
+name: Build and push Conduit backend
 
 on: 
   push:
@@ -38,9 +38,8 @@ jobs:
     uses: vbortnyk/conduit-deployment/.github/workflows/single-service-deployment.yml@ci/setup
     secrets: inherit
     with:
-      service: ${{ vars.BACKEND_SERVICE_NAME }}
-      tag: ${{ github.sha }}
-      port: ${{ vars.BACKEND_PORT }}
-      vps-host: ${{ vars.VPS_HOST }}
-      vps-username: ${{ vars.VPS_USERNAME }}
-      frontend-service-name: ${{ vars.FRONTEND_SERVICE_NAME }}
+      SERVICE_NAME: ${{ vars.BACKEND_SERVICE_NAME }}
+      TAG: ${{ github.sha }}
+      PORT: ${{ vars.BACKEND_PORT }}
+      VPS_HOST: ${{ vars.VPS_HOST }}
+      VPS_USERNAME: ${{ vars.VPS_USERNAME }}
